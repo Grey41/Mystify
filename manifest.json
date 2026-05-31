@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "Mystera Legacy Client",
+    "version": "1.0",
+    "permissions": ["scripting"],
+    "content_scripts": [
+        {
+            "matches": ["https://www.mysteralegacy.com/play/full.php", "https://www.mysteralegacy.com/play-ml/"],
+            "js": ["content.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": ["inject.js"],
+        "matches": ["https://www.mysteralegacy.com/*"]
+    }]
+}
