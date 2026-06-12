@@ -412,6 +412,8 @@ function start() {
 
             if (json.type == "skill")
                 Skills.update(json.obj, json.tier)
+
+            console.log(json)
         }
 
         if (event.data.type == "send") {
@@ -567,11 +569,15 @@ function init() {
 
             input {
                 -webkit-appearance: none;
+                background: none;
                 height: .5em;
                 border-radius: 1em;
                 background-color: #2af;
-                width: 100%;
                 margin: 0;
+
+                &::-webkit-slider-container {
+                    min-block-size: 0
+                }
 
                 &::-webkit-slider-thumb {
                     -webkit-appearance: none;
@@ -740,6 +746,7 @@ function init() {
             font: inherit;
             padding: .5em;
             border: none;
+            outline: none;
             background: none;
             cursor: pointer;
             color: #aaa;
