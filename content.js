@@ -11,6 +11,7 @@ const CALC = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><pat
 const CLOSE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>`
 const FIRE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M153.6 29.9l16-21.3C173.6 3.2 180 0 186.7 0 198.4 0 208 9.6 208 21.3l0 22.1c0 13.1 5.4 25.7 14.9 34.7L307.6 159C356.4 205.6 384 270.2 384 337.7 384 434 306 512 209.7 512L192 512C86 512 0 426 0 320l0-3.8c0-48.8 19.4-95.6 53.9-130.1l3.5-3.5c4.2-4.2 10-6.6 16-6.6 12.5 0 22.6 10.1 22.6 22.6L96 288c0 35.3 28.7 64 64 64s64-28.7 64-64l0-3.9c0-18-7.2-35.3-19.9-48l-38.6-38.6c-24-24-37.5-56.7-37.5-90.7 0-27.7 9-54.8 25.6-76.9z"/></svg>`
 const LAYER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M232.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 149.8C5.4 145.8 0 137.3 0 128s5.4-17.9 13.9-21.8L232.5 5.2zM48.1 218.4l164.3 75.9c27.7 12.8 59.6 12.8 87.3 0l164.3-75.9 34.1 15.8c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 277.8C5.4 273.8 0 265.3 0 256s5.4-17.9 13.9-21.8l34.1-15.8zM13.9 362.2l34.1-15.8 164.3 75.9c27.7 12.8 59.6 12.8 87.3 0l164.3-75.9 34.1 15.8c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 405.8C5.4 401.8 0 393.3 0 384s5.4-17.9 13.9-21.8z"/></svg>`
+const ARROW = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M477.9 75.5c4.5-11.8 1.7-25.2-7.2-34.1s-22.3-11.8-34.1-7.2l-416 160C7.9 199-.3 211.2 0 224.7s9.1 25.4 21.9 29.6l176.8 58.9 58.9 176.8c4.3 12.8 16.1 21.6 29.6 21.9s25.7-7.9 30.6-20.5l160-416z"/></svg>`
 const NS = "http://www.w3.org/2000/svg"
 
 const main = document.createElement("div")
@@ -21,6 +22,7 @@ const items = image("/data/misc/item16.png")
 const tiles = image("/data/misc/tile16.png")
 
 class Popup {
+    static ready = ext.storage.local.get()
     static windows = new Map()
     static top = 0
 
@@ -190,7 +192,6 @@ class Layer extends Popup {
 }
 
 class Settings extends Popup {
-    static ready = ext.storage.local.get()
     static light = 1
 
     constructor() {
@@ -209,7 +210,7 @@ class Settings extends Popup {
         main.innerHTML = `
 <strong>Settings</strong>
 
-<button title = "The real 'fullscreen mode'">Toggle fullscreen</button>
+<button class = button title = "The real 'fullscreen mode'">Toggle fullscreen</button>
 
 <datalist id = marker>
     <option value = 1></option>
@@ -218,8 +219,9 @@ class Settings extends Popup {
 <label class = range id = light>Brightness<input type = range step = any max = 2 min = 0 list = marker></label>
 <label class = range id = sat>Saturation<input type = range step = any max = 2 min = 0 list = marker></label>
 <label class = range id = contrast>Contrast<input type = range step = any max = 2 min = 0 list = marker></label>
-
 <label class = check id = sharp>Sharp rendering<input type = checkbox ${Settings.sharp ? "checked" : ""}></label>`
+
+//<label class = check id = arrow>Display chest arrows<input type = checkbox ${Settings.arrow ? "checked" : ""}></label>
 
         range("light")
         range("sat")
@@ -229,6 +231,11 @@ class Settings extends Popup {
             postMessage({type: "sharp", value: event.target.checked})
             ext.storage.local.set({sharp: Settings.sharp = event.target.checked})
         }
+
+        // main.querySelector("#arrow").onchange = event => {
+        //     postMessage({type: "arrow", value: event.target.checked})
+        //     ext.storage.local.set({arrow: Settings.arrow = event.target.checked})
+        // }
 
         main.querySelector("button").onclick = () => document.fullscreenElement ? document.exitFullscreen?.() : document.body.requestFullscreen()
         main.id = "settings"
@@ -241,20 +248,9 @@ class Skills extends Popup {
     static active = false
     static tier = 0
 
-    static {
-        setInterval(() => {
-            for (const key in this.data) {
-                const item = this.data[key]
-
-                const exp = this.exp(item)
-                const dx = Math.max(exp - item.xp, 0)
-
-                item.rate = dx * 360
-                item.xp = exp
-                this.panel == key && item.change?.()
-            }
-        }, 1e4)
-    }
+    rows = {}
+    skills = document.createElement("div")
+    right = document.createElement("div")
 
     static update(obj, tier) {
         for (const key in obj) {
@@ -274,6 +270,10 @@ class Skills extends Popup {
         return this.data[key] ||= {carns: 0, level: 0, bar: 0, xp: 0, rate: 0, inc: false}
     }
 
+    static name(key) {
+        return key.replace(/\w\S*/g, e => e[0].toUpperCase() + e.substr(1).toLowerCase())
+    }
+
     static bar(key, value) {
         const skill = this.get(key)
         const now = value / 100
@@ -287,9 +287,10 @@ class Skills extends Popup {
 
     static refresh(key) {
         if (!this.window) return
+        const skill = this.window.rows[key]
 
-        const skill = this.data[key]
-        skill.change ? skill.change() : this.active && this.window.render()
+        skill ? skill() : this.window.render()
+        key == Skills.target && this.window.panel()
     }
 
     static exp(item) {
@@ -300,13 +301,55 @@ class Skills extends Popup {
         super(400, 200, 350, 150)
 
         const title = document.createElement("strong")
-        const skills = document.createElement("div")
-
         const left = document.createElement("div")
-        const right = document.createElement("div")
 
-        this.render = () => skills.replaceChildren(...Object.entries(Skills.data).map(([key, item]) => {
-            const name = key.replace(/\w\S*/g, e => e[0].toUpperCase() + e.substr(1).toLowerCase())
+        title.textContent = "Skills"
+        left.id = "skills"
+
+        this.main.append(left, this.right)
+        left.append(title, this.skills)
+
+        Skills.window = this
+        this.render()
+    }
+
+    panel() {
+        if (!this.skill)
+            return
+
+        const item = Skills.data[this.skill]
+        const title = document.createElement("strong")
+        const extra = document.createElement("span")
+        const total = document.createElement("span")
+        const xp = document.createElement("span")
+        // const hour = document.createElement("span")
+        const target = document.createElement("button")
+
+        title.textContent = Skills.name(this.skill) + (Skills.target ? ` \u00b7 ${Math.round(Skills.exp(item) / Skills.exp(Skills.data[Skills.target]) * 100)}%` : "")
+        target.textContent = Skills.target == this.skill ? "Remove target" : "Set as target"
+        total.textContent = "Total levels: " + Math.round((item.level + item.bar) * 1e3) / 1e3
+        xp.textContent = `Total XP: ${Math.round(Skills.exp(item))}`
+        target.className = "button"
+        // hour.textContent = "XP/hr: " + Math.floor(item.rate)
+
+        target.onclick = () => {
+            const old = this.rows[Skills.target]
+
+            Skills.target = Skills.target == this.skill ? null : this.skill
+            this.rows[this.skill]()
+            old?.()
+        }
+
+        this.right.replaceChildren(title, total, xp, target)
+    }
+
+    render() {
+        if (!Skills.active)
+            return this.skills.textContent = "Please go to Character -> Skills"
+
+        const list = Object.entries(Skills.data).sort(([, a], [, b]) => b.level + b.bar - a.level - a.bar)
+
+        this.skills.replaceChildren(...list.map(([key, item]) => {
             const main = document.createElement("div")
             const title = document.createElement("span")
 
@@ -315,21 +358,7 @@ class Skills extends Popup {
             const yellow = document.createElementNS(NS, "rect")
             const blue = document.createElementNS(NS, "rect")
 
-            const panel = () => {
-                const title = document.createElement("strong")
-                const total = document.createElement("span")
-                const xp = document.createElement("span")
-                const hour = document.createElement("span")
-
-                title.textContent = name
-                total.textContent = "Total levels: " + Math.round((item.level + item.bar) * 1e3) / 1e3
-                xp.textContent = "Total XP: " + Math.round(Skills.exp(item))
-                hour.textContent = "XP/hr: " + Math.floor(item.rate)
-
-                right.replaceChildren(title, total, xp, hour)
-            }
-
-            item.change = () => {
+            const change = this.rows[key] = () => {
                 const level = item.level + item.bar
                 const base = Math.min(Skills.tier * 10, level)
 
@@ -340,13 +369,15 @@ class Skills extends Popup {
                 yellow.setAttribute("x", item.carns * 10 + "%")
 
                 blue.setAttribute("width", item.carns * 10 + "%")
-                title.textContent = name + ": " + Math.floor(Math.max(base, item.carns * 10) * 10) / 10
-                this.panel == key && panel()
+                title.textContent = Skills.name(key) + ": " + Math.floor(Math.max(base, item.carns * 10) * 10) / 10
+
+                this.skill == key && this.panel()
+                main.classList.toggle("active", Skills.target == key)
             }
 
             main.onclick = () => {
-                this.panel = key
-                panel()
+                this.skill = key
+                this.panel()
             }
 
             fade.setAttribute("fill", "#888")
@@ -362,25 +393,61 @@ class Skills extends Popup {
             svg.append(fade, yellow, blue)
 
             main.append(title, svg)
-            item.change()
+            change()
 
             return main
         }))
+    }
+}
 
-        title.textContent = "Skills"
-        skills.id = "skills"
+class Arrows extends Popup {
+    constructor() {
+        super(300, 200, 200, 100)
 
-        this.main.append(left, right)
-        left.append(title, skills)
+        const input = (id, name) => {
+            const label = document.createElement("label")
+            const input = document.createElement("input")
 
-        Skills.window = this
-        Skills.active ? this.render() : skills.textContent = "Please go to Character -> Skills"
+            input.checked = Arrows[id]
+            input.type = "checkbox"
+            label.className = "check"
+
+            label.onchange = () => {
+                ext.storage.local.set({[id]: Arrows[id] = input.checked})
+                Arrows.update()
+            }
+
+            label.append(name, input)
+            main.appendChild(label)
+        }
+
+        const main = document.createElement("div")
+
+        main.innerHTML = "<strong>Location Arrows</strong>"
+        main.id = "arrows"
+
+        input("chest", "Treasure chests")
+        input("shiny", "Shiny rocks")
+        input("crystal", "Crystal rocks")
+
+        this.main.appendChild(main)
+    }
+
+    static update() {
+        postMessage({
+            type: "arrow",
+
+            value: [
+                ["chest", "Treasure Chest"],
+                ["shiny", "Shiny Rock"],
+                ["crystal", "Crystal Rock"]
+            ].filter(([a]) => this[a]).map(([, e]) => e)
+        })
     }
 }
 
 function image(path) {
     const image = new Image()
-
     image.src = path
 
     return image
@@ -412,23 +479,25 @@ function start() {
 
             if (json.type == "skill")
                 Skills.update(json.obj, json.tier)
-
-            console.log(json)
         }
 
-        if (event.data.type == "send") {
+        if (event.data.type == "send")
             if (json.type == "c" && json.r == "ub" && json.u == "star") {
                 Skills.tier ++
                 Skills.window?.render()
             }
-        }
 
         if (event.data.type == "ready")
-            Settings.ready.then(data => {
+            Popup.ready.then(data => {
                 postMessage({type: "light", value:  Settings.light = data.light ?? 1})
                 postMessage({type: "sat", value: Settings.sat = data.sat ?? 1})
                 postMessage({type: "contrast", value: Settings.contrast = data.contrast ?? 1})
                 postMessage({type: "sharp", value: Settings.sharp = data.sharp ?? false})
+
+                Arrows.chest = data.chest ?? false
+                Arrows.shiny = data.shiny ?? false
+                Arrows.crystal = data.crystal ?? false
+                Arrows.update()
             })
 
         if (event.data.type == "click") {
@@ -441,6 +510,7 @@ function start() {
     host.getElementById("calc").onclick = () => Popup.open(Skills)
     host.getElementById("gear").onclick = () => Popup.open(Settings)
     host.getElementById("map").onclick = () => Popup.open(Layer)
+    host.getElementById("arrow").onclick = () => Popup.open(Arrows)
     host.getElementById("toggle").onclick = () => panel.classList.toggle("open")
 }
 
@@ -482,6 +552,22 @@ function init() {
         margin-bottom: 1em
     }
 
+    .button {
+        font: inherit;
+        cursor: pointer;
+        padding: .2em .5em;
+        border: none;
+        background-color: #333;
+        border-radius: .5em;
+        color: inherit;
+        transition: .2s;
+
+        &:hover {
+            background-color: #555;
+            color: #fff
+        }
+    }
+
     #layers {
         display: flex;
         flex-direction: column;
@@ -502,65 +588,52 @@ function init() {
         }
     }
 
-    #settings {
-        button {
-            font: inherit;
-            cursor: pointer;
-            padding: .2em .5em;
-            border: none;
-            background-color: #333;
-            border-radius: .5em;
-            color: inherit;
-            transition: .2s;
+    .check {
+        align-items: center;
+        display: flex;
+        max-width: 20em;
+        margin: 1em 0;
 
-            &:hover {
-                background-color: #555;
-                color: #fff
+        input {
+            margin: 0 0 0 auto;
+            width: 3em;
+            position: relative;
+            -webkit-appearance: none;
+            height: 1.2em;
+            border-radius: 1em;
+            outline: none;
+            transition: .2s;
+            cursor: pointer;
+            background-color: #444;
+
+            &:checked {
+                background-color: #2af !important;
+
+                &::after {
+                    left: calc(100% - 1.5em - 2px);
+                    background-color: #fff
+                }
+            }
+
+            &::after {
+                position: absolute;
+                content: "";
+                width: 1.5em;
+                left: 2px;
+                top: 2px;
+                border-radius: 1em;
+                height: calc(100% - 4px);
+                background-color: #888;
+                transition: .2s
             }
         }
+    }
 
+    #settings {
         label {
             display: flex;
             max-width: 20em;
             margin: 1em 0
-        }
-
-        .check {
-            align-items: center;
-
-            input {
-                margin: 0 0 0 auto;
-                width: 3em;
-                position: relative;
-                -webkit-appearance: none;
-                height: 1.2em;
-                border-radius: 1em;
-                outline: none;
-                transition: .2s;
-                cursor: pointer;
-                background-color: #444;
-
-                &:checked {
-                    background-color: #2af !important;
-
-                    &::after {
-                        left: calc(100% - 1.5em - 2px);
-                        background-color: #fff
-                    }
-                }
-
-                &::after {
-                    position: absolute;
-                    content: "";
-                    width: 1.5em;
-                    left: 2px;
-                    top: 2px;
-                    border-radius: 1em;
-                    height: calc(100% - 4px);
-                    background-color: #888;
-                    transition: .2s
-                }
-            }
         }
 
         .range {
@@ -618,21 +691,10 @@ function init() {
                 min-height: 0;
 
                 > div:first-child {
-                    scrollbar-width: none;
-                    overflow: auto;
+                    /* scrollbar-width: none; */
+                    overflow-y: auto;
                     flex: 1 1 0;
-                    padding: 0 1em 1em 1em;
-
-                    + div {
-                        padding: 0 1em 1em 1em;
-                        flex: 0 0 14em;
-                        border-left: 1px solid #333;
-
-                        span {
-                            display: block;
-                            white-space: nowrap
-                        }
-                    }
+                    padding: 0 1em 1em 1em
                 }
             }
 
@@ -783,22 +845,39 @@ function init() {
         }
     }
 
-    #skills > div {
-        display: grid;
-        grid-template-columns: 10em auto;
-        cursor: pointer;
-        transition: .2s;
+    #skills {
+        > div > div {
+            display: grid;
+            grid-template-columns: 10em auto;
+            cursor: pointer;
+            transition: .2s;
 
-        &:hover {
-            color: #fff
+            &:hover, &.active {
+                color: #fff
+            }
+
+            svg {
+                height: 1.5em
+            }
+
+            rect {
+                clip-path: url(#clip)
+            }
         }
 
-        svg {
-            height: 1.5em
-        }
+        + div {
+            padding: 0 1em 1em 1em;
+            flex: 0 0 14em;
+            border-left: 1px solid #333;
 
-        rect {
-            clip-path: url(#clip)
+            button {
+                margin-top: .5em
+            }
+
+            > span {
+                display: block;
+                white-space: nowrap
+            }
         }
     }
 </style>
@@ -821,6 +900,7 @@ function init() {
             <div>
                 <button id = map title = "Map selector">${LAYER}</button>
                 <button id = calc title = "Skill calculator">${CALC}</button>
+                <button id = arrow title = "Nearby things">${ARROW}</button>
                 <button id = gear title = Settings>${GEAR}</button>
             </div>
         </div>
