@@ -14,12 +14,26 @@ const LAYER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><pa
 const ARROW = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M477.9 75.5c4.5-11.8 1.7-25.2-7.2-34.1s-22.3-11.8-34.1-7.2l-416 160C7.9 199-.3 211.2 0 224.7s9.1 25.4 21.9 29.6l176.8 58.9 58.9 176.8c4.3 12.8 16.1 21.6 29.6 21.9s25.7-7.9 30.6-20.5l160-416z"/></svg>`
 const NS = "http://www.w3.org/2000/svg"
 
+const ARROWS = [
+    {id: "chest", desc: "Treasure chests", name: "Treasure Chest", color: 0xaa8866},
+    {id: "shiny", desc: "Shiny rocks", name: "Shiny Rock", color: 0xffaa00},
+    {id: "crystal", desc: "Crystal rocks", name: "Crystal Rock", color: 0x22aaff},
+    {id: "chaos", desc: "Chaos chests", name: "Odd Chest", color: 0x885588},
+    {id: "altar", desc: "Altars", name: "Altar", color: 0xffffff}
+]
+
+// Altar
+// Odd Chest
+
 const main = document.createElement("div")
 const host = main.attachShadow({mode: "open"})
 const ext = globalThis.browser ?? globalThis.chrome
+const url = ext.runtime.getURL("assets/mob.png")
+const tiles = new Image()
 
-const items = image("/data/misc/item16.png")
-const tiles = image("/data/misc/tile16.png")
+// const tiles = image("/data/misc/tile16.png")
+
+// console.log(ext.declarativeNetRequest.getEnabledRulesets())
 
 class Popup {
     static ready = ext.storage.local.get()
@@ -162,7 +176,7 @@ class Layer extends Popup {
 
             canvas.width = 16
             canvas.height = 16
-            ctx.drawImage(spr < 0 ? tiles : items, x * 16, y * 16, 16, 16, 0, 0, 16, 16)
+            ctx.drawImage(tiles, (spr < 0 ? x : x + 16) * 16, y * 16, 16, 16, 0, 0, 16, 16)
 
             return canvas
         }
@@ -221,8 +235,6 @@ class Settings extends Popup {
 <label class = range id = contrast>Contrast<input type = range step = any max = 2 min = 0 list = marker></label>
 <label class = check id = sharp>Sharp rendering<input type = checkbox ${Settings.sharp ? "checked" : ""}></label>`
 
-//<label class = check id = arrow>Display chest arrows<input type = checkbox ${Settings.arrow ? "checked" : ""}></label>
-
         range("light")
         range("sat")
         range("contrast")
@@ -231,11 +243,6 @@ class Settings extends Popup {
             postMessage({type: "sharp", value: event.target.checked})
             ext.storage.local.set({sharp: Settings.sharp = event.target.checked})
         }
-
-        // main.querySelector("#arrow").onchange = event => {
-        //     postMessage({type: "arrow", value: event.target.checked})
-        //     ext.storage.local.set({arrow: Settings.arrow = event.target.checked})
-        // }
 
         main.querySelector("button").onclick = () => document.fullscreenElement ? document.exitFullscreen?.() : document.body.requestFullscreen()
         main.id = "settings"
@@ -404,7 +411,12 @@ class Arrows extends Popup {
     constructor() {
         super(300, 200, 200, 100)
 
-        const input = (id, name) => {
+        const main = document.createElement("div")
+
+        main.innerHTML = "<strong>Location Arrows</strong>"
+        main.id = "arrows"
+
+        ARROWS.forEach(({id, desc}) => {
             const label = document.createElement("label")
             const input = document.createElement("input")
 
@@ -417,40 +429,16 @@ class Arrows extends Popup {
                 Arrows.update()
             }
 
-            label.append(name, input)
+            label.append(desc, input)
             main.appendChild(label)
-        }
-
-        const main = document.createElement("div")
-
-        main.innerHTML = "<strong>Location Arrows</strong>"
-        main.id = "arrows"
-
-        input("chest", "Treasure chests")
-        input("shiny", "Shiny rocks")
-        input("crystal", "Crystal rocks")
+        })
 
         this.main.appendChild(main)
     }
 
     static update() {
-        postMessage({
-            type: "arrow",
-
-            value: [
-                ["chest", "Treasure Chest"],
-                ["shiny", "Shiny Rock"],
-                ["crystal", "Crystal Rock"]
-            ].filter(([a]) => this[a]).map(([, e]) => e)
-        })
+        postMessage({type: "arrow", value: ARROWS.filter(({id}) => this[id])})
     }
-}
-
-function image(path) {
-    const image = new Image()
-    image.src = path
-
-    return image
 }
 
 function start() {
@@ -515,14 +503,7 @@ function start() {
 }
 
 function init() {
-    const script = document.createElement("script")
-
-    const load = () => {
-        document.body.appendChild(main)
-        document.documentElement.appendChild(script)
-
-        script.remove()
-    }
+    const load = () => document.body.appendChild(main)
 
     host.innerHTML = `
 <style>
@@ -912,7 +893,8 @@ function init() {
 <div id = popups></div>`
 
     main.id = "overlay"
-    script.src = ext.runtime.getURL("inject.js")
+    main.dataset.url = url
+    tiles.src = url
 
     document.getElementById("overlay")?.remove()
     document.readyState == "loading" ? addEventListener("DOMContentLoaded", load, {once: true}) : load()
