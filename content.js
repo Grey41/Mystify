@@ -6,12 +6,14 @@
 - Does deleveling glitch it?
 */
 
-const GEAR = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M195.1 9.5C198.1-5.3 211.2-16 226.4-16l59.8 0c15.2 0 28.3 10.7 31.3 25.5L332 79.5c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9l-29.9 51.8c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5l-59.8 0c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8L73.5 432.3c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7L12.3 185.8c-11.4-10.1-14-26.8-6.5-39.9L35.7 94.1c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8L195.1 9.5zM256.3 336a80 80 0 1 0 -.6-160 80 80 0 1 0 .6 160z"/></svg>`
-const CALC = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-384c0-35.3-28.7-64-64-64L64 0zM96 64l192 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32L96 160c-17.7 0-32-14.3-32-32l0-32c0-17.7 14.3-32 32-32zm16 168a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zm80 24a24 24 0 1 1 0-48 24 24 0 1 1 0 48zm128-24a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zM88 352a24 24 0 1 1 0-48 24 24 0 1 1 0 48zm128-24a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zm80 24a24 24 0 1 1 0-48 24 24 0 1 1 0 48zM64 424c0-13.3 10.7-24 24-24l112 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L88 448c-13.3 0-24-10.7-24-24zm232-24c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24z"/></svg>`
-const CLOSE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>`
-const FIRE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M153.6 29.9l16-21.3C173.6 3.2 180 0 186.7 0 198.4 0 208 9.6 208 21.3l0 22.1c0 13.1 5.4 25.7 14.9 34.7L307.6 159C356.4 205.6 384 270.2 384 337.7 384 434 306 512 209.7 512L192 512C86 512 0 426 0 320l0-3.8c0-48.8 19.4-95.6 53.9-130.1l3.5-3.5c4.2-4.2 10-6.6 16-6.6 12.5 0 22.6 10.1 22.6 22.6L96 288c0 35.3 28.7 64 64 64s64-28.7 64-64l0-3.9c0-18-7.2-35.3-19.9-48l-38.6-38.6c-24-24-37.5-56.7-37.5-90.7 0-27.7 9-54.8 25.6-76.9z"/></svg>`
-const LAYER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M232.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 149.8C5.4 145.8 0 137.3 0 128s5.4-17.9 13.9-21.8L232.5 5.2zM48.1 218.4l164.3 75.9c27.7 12.8 59.6 12.8 87.3 0l164.3-75.9 34.1 15.8c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 277.8C5.4 273.8 0 265.3 0 256s5.4-17.9 13.9-21.8l34.1-15.8zM13.9 362.2l34.1-15.8 164.3 75.9c27.7 12.8 59.6 12.8 87.3 0l164.3-75.9 34.1 15.8c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 405.8C5.4 401.8 0 393.3 0 384s5.4-17.9 13.9-21.8z"/></svg>`
-const ARROW = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M477.9 75.5c4.5-11.8 1.7-25.2-7.2-34.1s-22.3-11.8-34.1-7.2l-416 160C7.9 199-.3 211.2 0 224.7s9.1 25.4 21.9 29.6l176.8 58.9 58.9 176.8c4.3 12.8 16.1 21.6 29.6 21.9s25.7-7.9 30.6-20.5l160-416z"/></svg>`
+const GEAR = `<svg viewBox="0 0 512 512"><path d="M195.1 9.5C198.1-5.3 211.2-16 226.4-16l59.8 0c15.2 0 28.3 10.7 31.3 25.5L332 79.5c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9l-29.9 51.8c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5l-59.8 0c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8L73.5 432.3c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7L12.3 185.8c-11.4-10.1-14-26.8-6.5-39.9L35.7 94.1c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8L195.1 9.5zM256.3 336a80 80 0 1 0 -.6-160 80 80 0 1 0 .6 160z"/></svg>`
+const CALC = `<svg viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-384c0-35.3-28.7-64-64-64L64 0zM96 64l192 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32L96 160c-17.7 0-32-14.3-32-32l0-32c0-17.7 14.3-32 32-32zm16 168a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zm80 24a24 24 0 1 1 0-48 24 24 0 1 1 0 48zm128-24a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zM88 352a24 24 0 1 1 0-48 24 24 0 1 1 0 48zm128-24a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zm80 24a24 24 0 1 1 0-48 24 24 0 1 1 0 48zM64 424c0-13.3 10.7-24 24-24l112 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L88 448c-13.3 0-24-10.7-24-24zm232-24c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24z"/></svg>`
+const CLOSE = `<svg viewBox="0 0 512 512"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>`
+const FIRE = `<svg viewBox="0 0 384 512"><path d="M153.6 29.9l16-21.3C173.6 3.2 180 0 186.7 0 198.4 0 208 9.6 208 21.3l0 22.1c0 13.1 5.4 25.7 14.9 34.7L307.6 159C356.4 205.6 384 270.2 384 337.7 384 434 306 512 209.7 512L192 512C86 512 0 426 0 320l0-3.8c0-48.8 19.4-95.6 53.9-130.1l3.5-3.5c4.2-4.2 10-6.6 16-6.6 12.5 0 22.6 10.1 22.6 22.6L96 288c0 35.3 28.7 64 64 64s64-28.7 64-64l0-3.9c0-18-7.2-35.3-19.9-48l-38.6-38.6c-24-24-37.5-56.7-37.5-90.7 0-27.7 9-54.8 25.6-76.9z"/></svg>`
+const LAYER = `<svg viewBox="0 0 512 512"><path d="M232.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 149.8C5.4 145.8 0 137.3 0 128s5.4-17.9 13.9-21.8L232.5 5.2zM48.1 218.4l164.3 75.9c27.7 12.8 59.6 12.8 87.3 0l164.3-75.9 34.1 15.8c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 277.8C5.4 273.8 0 265.3 0 256s5.4-17.9 13.9-21.8l34.1-15.8zM13.9 362.2l34.1-15.8 164.3 75.9c27.7 12.8 59.6 12.8 87.3 0l164.3-75.9 34.1 15.8c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 405.8C5.4 401.8 0 393.3 0 384s5.4-17.9 13.9-21.8z"/></svg>`
+const ARROW = `<svg viewBox="0 0 512 512"><path d="M477.9 75.5c4.5-11.8 1.7-25.2-7.2-34.1s-22.3-11.8-34.1-7.2l-416 160C7.9 199-.3 211.2 0 224.7s9.1 25.4 21.9 29.6l176.8 58.9 58.9 176.8c4.3 12.8 16.1 21.6 29.6 21.9s25.7-7.9 30.6-20.5l160-416z"/></svg>`
+const PANEL = `<svg viewBox="0 0 576 512"><path d="M512 96L160 96c0-35.3 28.7-64 64-64l288 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64l-48 0 0-64 48 0 0-192zM0 224c0-35.3 28.7-64 64-64l288 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 224zm64 40c0 13.3 10.7 24 24 24l240 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 240c-13.3 0-24 10.7-24 24z"/></svg>`
+const XMARK = `<svg viewBox="0 0 384 512"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg>`
 const NS = "http://www.w3.org/2000/svg"
 
 const ARROWS = [
@@ -22,25 +24,38 @@ const ARROWS = [
     {id: "altar", desc: "Altars", name: "Altar", color: 0xffffff}
 ]
 
-// Altar
-// Odd Chest
-
 const main = document.createElement("div")
+const full = location.pathname == "/play/full.php"
+
 const host = main.attachShadow({mode: "open"})
 const ext = globalThis.browser ?? globalThis.chrome
-const url = ext.runtime.getURL("assets/mob.png")
-const tiles = new Image()
+// const url = ext.runtime.getURL("assets/")
+// const tiles = new Image()
 
-// const tiles = image("/data/misc/tile16.png")
+const tiles = image("/data/misc/tile16.png")
+const items = image("/data/misc/item16.png")
 
 // console.log(ext.declarativeNetRequest.getEnabledRulesets())
 
-class Popup {
+const popup = class {
     static ready = ext.storage.local.get()
     static windows = new Map()
+    static panel = false
     static top = 0
 
     static open(base) {
+        const popups = host.getElementById("popups")
+        const side = host.getElementById("side")
+
+        if (this.panel) {
+            const win = new base()
+
+            side.classList.add("open")
+            side.querySelector("section").replaceChildren(win.main)
+
+            return
+        }
+
         const existing = this.windows.get(base)
 
         if (existing) {
@@ -50,22 +65,13 @@ class Popup {
             existing.window.style.left = Math.min(Math.max(rect.left, 0), innerWidth - rect.width) + "px"
             existing.window.style.top = Math.min(Math.max(rect.top, 0), innerHeight - rect.height) + "px"
 
-            return existing
+            return
         }
 
-        const win = new base()
-
-        this.windows.set(base, win)
-        return win
-    }
-
-    window = document.createElement("div")
-
-    constructor(width, height, mw, mh) {
         const drag = (event, edge) => {
             const x = event.clientX
             const y = event.clientY
-            const rect = this.window.getBoundingClientRect()
+            const rect = win.window.getBoundingClientRect()
 
             event.target.onpointerup = event => {
                 event.target.onpointermove = null
@@ -81,29 +87,38 @@ class Popup {
 
                 if (edge) {
                     if (edge.x == "left") {
-                        const pos = Math.min(rect.right - mw, left)
+                        win.x = Math.min(rect.right - base.mw, left)
+                        win.width = rect.right - pos
 
-                        this.window.style.left = pos + "px"
-                        this.window.style.width = rect.right - pos + "px"
+                        // win.window.style.left = base.pos.x + "px"
+                        // win.window.style.width = base.width + "px"
                     }
 
                     if (edge.y == "top") {
-                        const pos = Math.min(rect.bottom - mh, top)
+                        win.y = Math.min(rect.bottom - base.mh, top)
+                        win.height = rect.bottom - pos
 
-                        this.window.style.top = pos + "px"
-                        this.window.style.height = rect.bottom - pos + "px"
+                        // win.window.style.top = base.pos.y + "px"
+                        // win.window.style.height = base.height + "px"
                     }
 
-                    if (edge.x == "right")
-                        this.window.style.width = Math.min(Math.max(mw, rect.width + dx), innerWidth - rect.left) + "px"
+                    if (edge.x == "right") {
+                        win.width = Math.min(Math.max(base.mw, rect.width + dx), innerWidth - rect.left)
+                        // win.window.style.width = base.width + "px"
+                    }
 
-                    if (edge.y == "bottom")
-                        this.window.style.height = Math.min(Math.max(mh, rect.height + dy), innerHeight - rect.top) + "px"
+                    if (edge.y == "bottom") {
+                        win.height = Math.min(Math.max(base.mh, rect.height + dy), innerHeight - rect.top)
+                        // win.window.style.height = base.height + "px"
+                    }
                 }
 
                 else {
-                    this.window.style.left = Math.min(left, innerWidth - rect.width) + "px"
-                    this.window.style.top = Math.min(top, innerHeight - rect.height) + "px"
+                    win.x = Math.min(left, innerWidth - rect.width)
+                    win.y = Math.min(top, innerHeight - rect.height)
+
+                    // win.window.style.left = base.pos.x + "px"
+                    // win.window.style.top = base.pos.y + "px"
                 }
             }
 
@@ -111,7 +126,10 @@ class Popup {
             event.stopPropagation()
         }
 
-        this.window.innerHTML = `
+        // const [width, height, mw, mh] = base.size
+        const win = new base()
+
+        win.window.innerHTML = `
 <div>
     ${CLOSE}
 
@@ -124,44 +142,100 @@ class Popup {
     <div class = tr></div>
     <div class = bl></div>
     <div class = br></div>
-</div>
+</div>`
 
-<main></main>`
+        win.window.querySelector(".left").onpointerdown = e => drag(e, {x: "left"})
+        win.window.querySelector(".top").onpointerdown = e => drag(e, {y: "top"})
+        win.window.querySelector(".right").onpointerdown = e => drag(e, {x: "right"})
+        win.window.querySelector(".bottom").onpointerdown = e => drag(e, {y: "bottom"})
+        win.window.querySelector(".tl").onpointerdown = e => drag(e, {x: "left", y: "top"})
+        win.window.querySelector(".tr").onpointerdown = e => drag(e, {x: "right", y: "top"})
+        win.window.querySelector(".bl").onpointerdown = e => drag(e, {x: "left", y: "bottom"})
+        win.window.querySelector(".br").onpointerdown = e => drag(e, {x: "right", y: "bottom"})
 
-        this.window.querySelector(".left").onpointerdown = e => drag(e, {x: "left"})
-        this.window.querySelector(".top").onpointerdown = e => drag(e, {y: "top"})
-        this.window.querySelector(".right").onpointerdown = e => drag(e, {x: "right"})
-        this.window.querySelector(".bottom").onpointerdown = e => drag(e, {y: "bottom"})
-        this.window.querySelector(".tl").onpointerdown = e => drag(e, {x: "left", y: "top"})
-        this.window.querySelector(".tr").onpointerdown = e => drag(e, {x: "right", y: "top"})
-        this.window.querySelector(".bl").onpointerdown = e => drag(e, {x: "left", y: "bottom"})
-        this.window.querySelector(".br").onpointerdown = e => drag(e, {x: "right", y: "bottom"})
+        win.window.firstElementChild.onpointerdown = e => drag(e)
+        win.window.addEventListener("pointerdown", () => win.focus(), true)
+        win.window.appendChild(win.main)
 
-        this.window.firstElementChild.onpointerdown = e => drag(e)
-        this.window.addEventListener("pointerdown", () => this.focus(), true)
-
-        this.window.querySelector("svg").onclick = () => {
-            this.window.remove()
-            Popup.windows.delete(this.constructor)
+        win.window.querySelector("svg").onclick = () => {
+            win.window.remove()
+            this.windows.delete(base)
         }
 
-        this.window.style.left = innerWidth / 2 - width / 2 + "px"
-        this.window.style.top = innerHeight / 2 - height / 2 + "px"
-        this.window.style.width = width + "px"
-        this.window.style.height = height + "px"
+        this.windows.set(base, win)
+        win.focus()
 
-        this.main = this.window.lastElementChild
-        host.getElementById("popups").appendChild(this.window)
-    }
-
-    focus() {
-        this.window.style.zIndex = ++ Popup.top
+        popups.appendChild(win.window)
     }
 }
 
-class Layer extends Popup {
+class Base {
+    static pos = null
+
+    window = document.createElement("div")
+    main = document.createElement("main")
+
     constructor() {
-        super(150, 200, 150, 150)
+        this.constructor.pos ||= {
+            x: innerWidth / 2 - this.width / 2,
+            y: innerHeight / 2 - this.height / 2
+        }
+
+        this.window.style.left = this.x + "px"
+        this.window.style.top = this.y + "px"
+        this.window.style.width = this.width + "px"
+        this.window.style.height = this.height + "px"
+    }
+
+    get width() {
+        return this.constructor._width
+    }
+
+    set width(value) {
+        this.constructor._width = value
+        this.window.style.width = value + "px"
+    }
+
+    get height() {
+        return this.constructor._height
+    }
+
+    set height(value) {
+        this.constructor._height = value
+        this.window.style.height = value + "px"
+    }
+
+    get x() {
+        return this.constructor.pos.x
+    }
+
+    set x(value) {
+        this.constructor.pos.x = value
+        this.window.style.left = value + "px"
+    }
+
+    get y() {
+        return this.constructor.pos.y
+    }
+
+    set y(value) {
+        this.constructor.pos.y = value
+        this.window.style.top = value + "px"
+    }
+
+    focus() {
+        this.window.style.zIndex = ++ popup.top
+    }
+}
+
+class Layer extends Base {
+    static _width = 150
+    static _height = 200
+    static mw = 150
+    static mh = 150
+
+    constructor() {
+        super()
 
         const main = document.createElement("div")
         const title = document.createElement("strong")
@@ -176,7 +250,7 @@ class Layer extends Popup {
 
             canvas.width = 16
             canvas.height = 16
-            ctx.drawImage(tiles, (spr < 0 ? x : x + 16) * 16, y * 16, 16, 16, 0, 0, 16, 16)
+            ctx.drawImage(spr < 0 ? tiles : items, x * 16, y * 16, 16, 16, 0, 0, 16, 16)
 
             return canvas
         }
@@ -205,11 +279,15 @@ class Layer extends Popup {
     }
 }
 
-class Settings extends Popup {
+class Settings extends Base {
     static light = 1
+    static _width = 350
+    static _height = 200
+    static mw = 200
+    static mh = 150
 
     constructor() {
-        super(350, 200, 200, 150)
+        super()
 
         const range = name => {
             const label = main.querySelector("#" + name)
@@ -233,7 +311,8 @@ class Settings extends Popup {
 <label class = range id = light>Brightness<input type = range step = any max = 2 min = 0 list = marker></label>
 <label class = range id = sat>Saturation<input type = range step = any max = 2 min = 0 list = marker></label>
 <label class = range id = contrast>Contrast<input type = range step = any max = 2 min = 0 list = marker></label>
-<label class = check id = sharp>Sharp rendering<input type = checkbox ${Settings.sharp ? "checked" : ""}></label>`
+<label class = check id = sharp>Sharp rendering<input type = checkbox ${Settings.sharp ? "checked" : ""}></label>
+<label class = check id = ratio>Preserve ratio<input type = checkbox ${Settings.ratio ? "checked" : ""}></label>`
 
         range("light")
         range("sat")
@@ -244,16 +323,25 @@ class Settings extends Popup {
             ext.storage.local.set({sharp: Settings.sharp = event.target.checked})
         }
 
+        main.querySelector("#ratio").onchange = event => {
+            postMessage({type: "ratio", value: event.target.checked})
+            ext.storage.local.set({ratio: Settings.ratio = event.target.checked})
+        }
+
         main.querySelector("button").onclick = () => document.fullscreenElement ? document.exitFullscreen?.() : document.body.requestFullscreen()
         main.id = "settings"
         this.main.appendChild(main)
     }
 }
 
-class Skills extends Popup {
+class Skills extends Base {
     static data = {}
     static active = false
     static tier = 0
+    static _width = 400
+    static _height = 200
+    static mw = 350
+    static mh = 150
 
     rows = {}
     skills = document.createElement("div")
@@ -305,7 +393,7 @@ class Skills extends Popup {
     }
 
     constructor() {
-        super(400, 200, 350, 150)
+        super()
 
         const title = document.createElement("strong")
         const left = document.createElement("div")
@@ -326,10 +414,8 @@ class Skills extends Popup {
 
         const item = Skills.data[this.skill]
         const title = document.createElement("strong")
-        const extra = document.createElement("span")
         const total = document.createElement("span")
         const xp = document.createElement("span")
-        // const hour = document.createElement("span")
         const target = document.createElement("button")
 
         title.textContent = Skills.name(this.skill) + (Skills.target ? ` \u00b7 ${Math.round(Skills.exp(item) / Skills.exp(Skills.data[Skills.target]) * 100)}%` : "")
@@ -337,7 +423,6 @@ class Skills extends Popup {
         total.textContent = "Total levels: " + Math.round((item.level + item.bar) * 1e3) / 1e3
         xp.textContent = `Total XP: ${Math.round(Skills.exp(item))}`
         target.className = "button"
-        // hour.textContent = "XP/hr: " + Math.floor(item.rate)
 
         target.onclick = () => {
             const old = this.rows[Skills.target]
@@ -407,9 +492,14 @@ class Skills extends Popup {
     }
 }
 
-class Arrows extends Popup {
+class Arrows extends Base {
+    static _width = 300
+    static _height = 200
+    static mw = 200
+    static mh = 100
+
     constructor() {
-        super(300, 200, 200, 100)
+        super()
 
         const main = document.createElement("div")
 
@@ -441,69 +531,41 @@ class Arrows extends Popup {
     }
 }
 
-function start() {
-    const panel = host.getElementById("panel")
+function image(path) {
+    const image = new Image()
 
-    addEventListener("message", event => {
-        const json = event.data.data
-
-        if (event.data.type == "parse") {
-            if (json.type == "message") {
-                const match = json.text.match(/<span style='color:#66ffff'>Your (.+) skill is now level (\d+)\! .+ has increased\.<\/span>/)
-
-                if (match) {
-                    const [, key, level] = match
-                    const item = Skills.get(key)
-
-                    item.level = Number(level)
-                    item.inc = true
-
-                    Skills.refresh(key)
-                }
-            }
-
-            if (json.type == "s" && json.t)
-                Skills.bar(json.t, json.k)
-
-            if (json.type == "skill")
-                Skills.update(json.obj, json.tier)
-        }
-
-        if (event.data.type == "send")
-            if (json.type == "c" && json.r == "ub" && json.u == "star") {
-                Skills.tier ++
-                Skills.window?.render()
-            }
-
-        if (event.data.type == "ready")
-            Popup.ready.then(data => {
-                postMessage({type: "light", value:  Settings.light = data.light ?? 1})
-                postMessage({type: "sat", value: Settings.sat = data.sat ?? 1})
-                postMessage({type: "contrast", value: Settings.contrast = data.contrast ?? 1})
-                postMessage({type: "sharp", value: Settings.sharp = data.sharp ?? false})
-
-                Arrows.chest = data.chest ?? false
-                Arrows.shiny = data.shiny ?? false
-                Arrows.crystal = data.crystal ?? false
-                Arrows.update()
-            })
-
-        if (event.data.type == "click") {
-            Layer.list = event.data.list
-            Layer.tile = event.data.tile
-            Layer.window?.render()
-        }
-    })
-
-    host.getElementById("calc").onclick = () => Popup.open(Skills)
-    host.getElementById("gear").onclick = () => Popup.open(Settings)
-    host.getElementById("map").onclick = () => Popup.open(Layer)
-    host.getElementById("arrow").onclick = () => Popup.open(Arrows)
-    host.getElementById("toggle").onclick = () => panel.classList.toggle("open")
+    image.src = path
+    return image
 }
 
 function init() {
-    const load = () => document.body.appendChild(main)
+    const load = () => {
+        if (full) {
+            // const all = document.getElementById("all_container")
+            // const canvas = document.getElementById("jv")
+
+            // new ResizeObserver(() => {
+            //     const w = all.clientWidth
+            //     const h = all.clientHeight
+
+            //     const ratio = canvas.width / canvas.height
+            //     const shift = w / ratio > h
+
+            //     canvas.style.width = (shift ? h * ratio : w) + "px"
+            //     canvas.style.height = (shift ? h : w / ratio) + "px"
+            // }).observe(all)
+
+            document.body.style.display = "flex"
+            document.body.style.height = "100%"
+
+            // all.style.minWidth = 0
+            // all.style.display = "flex"
+            // all.style.alignItems = "center"
+            // all.style.justifyContent = "center"
+        }
+
+        document.body.appendChild(main)
+    }
 
     host.innerHTML = `
 <style>
@@ -523,6 +585,18 @@ function init() {
         overflow: visible;
         fill: currentColor;
         display: block
+    }
+
+    main {
+        display: flex;
+        flex: 1 1 0;
+        min-height: 0;
+
+        > div:first-child {
+            overflow-y: auto;
+            flex: 1 1 0;
+            padding: 0 1em 1em 1em
+        }
     }
 
     strong {
@@ -666,19 +740,6 @@ function init() {
             display: flex;
             flex-direction: column;
 
-            main {
-                display: flex;
-                flex: 1 1 0;
-                min-height: 0;
-
-                > div:first-child {
-                    /* scrollbar-width: none; */
-                    overflow-y: auto;
-                    flex: 1 1 0;
-                    padding: 0 1em 1em 1em
-                }
-            }
-
             > div:first-child {
                 flex: 0 0 2em;
 
@@ -689,7 +750,7 @@ function init() {
                 .top {
                     top: 0;
                     left: 0;
-                    height: .5em;
+                    height: 1em;
                     width: 100%;
                     transform: translateY(-50%);
                     cursor: ns-resize
@@ -698,7 +759,7 @@ function init() {
                 .left {
                     left: 0;
                     top: 0;
-                    width: .5em;
+                    width: 1em;
                     height: 100%;
                     transform: translateX(-50%);
                     cursor: ew-resize
@@ -707,7 +768,7 @@ function init() {
                 .bottom {
                     bottom: 0;
                     left: 0;
-                    height: .5em;
+                    height: 1em;
                     width: 100%;
                     transform: translateY(50%);
                     cursor: ns-resize
@@ -716,41 +777,38 @@ function init() {
                 .right {
                     right: 0;
                     top: 0;
-                    width: .5em;
+                    width: 1em;
                     height: 100%;
                     transform: translateX(50%);
                     cursor: ew-resize
                 }
 
+                .tl, .tr, .bl, .br {
+                    width: 1em;
+                    height: 1em
+                }
+
                 .tl {
                     left: 0;
                     top: 0;
-                    width: 1em;
-                    height: 1em;
                     cursor: nwse-resize
                 }
 
                 .tr {
                     right: 0;
                     top: 0;
-                    width: 1em;
-                    height: 1em;
                     cursor: nesw-resize
                 }
 
                 .bl {
                     left: 0;
                     bottom: 0;
-                    width: 1em;
-                    height: 1em;
                     cursor: nesw-resize
                 }
 
                 .br {
                     right: 0;
                     bottom: 0;
-                    width: 1em;
-                    height: 1em;
                     cursor: nwse-resize
                 }
 
@@ -771,6 +829,11 @@ function init() {
                 }
             }
         }
+    }
+
+    #hide {
+        width: 0;
+        position: absolute
     }
 
     #panel {
@@ -796,7 +859,7 @@ function init() {
             transition: .2s;
             border-radius: 2em;
 
-            &:hover {
+            &:hover, &.active {
                 color: #fff;
                 background-color: #333
             }
@@ -861,9 +924,72 @@ function init() {
             }
         }
     }
+
+    #side {
+        position: relative;
+        transition-duration: .2s;
+        height: 100%;
+        width: 0;
+        flex: 0 0 auto;
+        overflow: hidden;
+        border-left: 1px solid #333;
+        background-color: #111;
+
+        &.open {
+            width: 20em
+        }
+
+        > div {
+            position: absolute;
+            left: 0;
+            width: 20em;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            span {
+                padding: 1rem;
+                flex: 0 0 auto;
+                cursor: pointer;
+                display: block;
+
+                svg {
+                    transition-duration: .2s;
+                    margin-left: auto;
+                    height: 1.2rem;
+                    color: #ccc
+                }
+
+                &:hover svg {
+                    color: #fff
+                }
+            }
+
+            section {
+                display: contents
+            }
+        }
+
+        main {
+            flex-direction: column;
+            flex: 1 1 0
+        }
+
+        #skills + div {
+            padding-top: 1em;
+            border-top: 1px solid #333;
+            border-left: none
+        }
+    }
+
+    /* @media (pointer: coarse) {
+        :host {
+            font-size: 16px
+        }
+    }*/
 </style>
 
-<svg>
+<svg id = hide>
     <defs>
         <path id = stars d = "M309.5-18.9 383 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L441.7 305.9 467 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2L288.1 417.6 143.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9L19.9 191.4c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4L266.7-18.9c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L959 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L1017.7 305.9 1043 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2L864.1 417.6 719.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9L595.9 191.4c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4L842.7-18.9c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L1535 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L1593.7 305.9 1619 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2l-144.3-73.4L1295.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9-114.4-114.5c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L2111 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L2169.7 305.9 2195 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2l-144.3-73.4L1871.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9-114.4-114.5c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L2687 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L2745.7 305.9 2771 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2l-144.3-73.4L2447.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9-114.4-114.5c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L3263 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L3321.7 305.9 3347 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2l-144.3-73.4L3023.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9-114.4-114.5c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L3839 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L3897.7 305.9 3923 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2l-144.3-73.4L3599.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9-114.4-114.5c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L4415 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L4473.7 305.9 4499 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2l-144.3-73.4L4175.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9-114.4-114.5c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L4991 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L5049.7 305.9 5075 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2l-144.3-73.4L4751.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9-114.4-114.5c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Zm576 0L5567 125.3l159.8 25.4c9 1.4 16.3 7.7 19.1 16.3s.6 18-5.8 24.4L5625.7 305.9 5651 465.8c1.4 9-2.3 17.9-9.6 23.2s-17 6.1-25 2l-144.3-73.4L5327.7 491c-8.1 4.1-17.7 3.3-25-2s-11-14.3-9.6-23.2l25.2-159.9-114.4-114.5c-6.3-6.4-8.6-15.8-5.8-24.4s10.2-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1s17.3 5.1 21.4 13.1Z"/>
 
@@ -873,8 +999,6 @@ function init() {
     </defs>
 </svg>
 
-<div id = select></div>
-
 <div id = panel>
     <div>
         <div>
@@ -883,6 +1007,7 @@ function init() {
                 <button id = calc title = "Skill calculator">${CALC}</button>
                 <button id = arrow title = "Nearby things">${ARROW}</button>
                 <button id = gear title = Settings>${GEAR}</button>
+                ${full ? `<button id = window title = "Toggle windows">${PANEL}</button>` : ""}
             </div>
         </div>
     </div>
@@ -890,16 +1015,92 @@ function init() {
     <button id = toggle>${FIRE}</button>
 </div>
 
-<div id = popups></div>`
+<div id = popups></div>
+<div id = side><div><span>${XMARK}</span><section></section></div></div>`
 
     main.id = "overlay"
-    main.dataset.url = url
-    tiles.src = url
-
     document.getElementById("overlay")?.remove()
     document.readyState == "loading" ? addEventListener("DOMContentLoaded", load, {once: true}) : load()
 
-    start()
+    const panel = host.getElementById("panel")
+    const side = host.getElementById("side")
+    const content = side.querySelector("section")
+    const popups = host.getElementById("popups")
+    const toggle = host.getElementById("window")
+
+    addEventListener("message", event => {
+        const json = event.data.data
+
+        if (event.data.type == "parse") {
+            if (json.type == "message") {
+                const match = json.text.match(/<span style='color:#66ffff'>Your (.+) skill is now level (\d+)\! .+ has increased\.<\/span>/)
+
+                if (match) {
+                    const [, key, level] = match
+                    const item = Skills.get(key)
+
+                    item.level = Number(level)
+                    item.inc = true
+
+                    Skills.refresh(key)
+                }
+            }
+
+            if (json.type == "s" && json.t)
+                Skills.bar(json.t, json.k)
+
+            if (json.type == "skill")
+                Skills.update(json.obj, json.tier)
+        }
+
+        if (event.data.type == "send")
+            if (json.type == "c" && json.r == "ub" && json.u == "star") {
+                Skills.tier ++
+                Skills.window?.render()
+            }
+
+        if (event.data.type == "ready")
+            popup.ready.then(data => {
+                postMessage({type: "light", value:  Settings.light = data.light ?? 1})
+                postMessage({type: "sat", value: Settings.sat = data.sat ?? 1})
+                postMessage({type: "contrast", value: Settings.contrast = data.contrast ?? 1})
+                postMessage({type: "sharp", value: Settings.sharp = data.sharp ?? false})
+                postMessage({type: "ratio", value: Settings.ratio = data.ratio ?? false})
+
+                Arrows.chest = data.chest ?? false
+                Arrows.shiny = data.shiny ?? false
+                Arrows.crystal = data.crystal ?? false
+                Arrows.update()
+            })
+
+        if (event.data.type == "click") {
+            Layer.list = event.data.list
+            Layer.tile = event.data.tile
+            Layer.window?.render()
+        }
+    })
+
+    host.getElementById("calc").onclick = () => popup.open(Skills)
+    host.getElementById("gear").onclick = () => popup.open(Settings)
+    host.getElementById("map").onclick = () => popup.open(Layer)
+    host.getElementById("arrow").onclick = () => popup.open(Arrows)
+
+    toggle && (toggle.onclick = event => {
+        event.target.closest("button").classList.toggle("active", popup.panel = !popup.panel)
+
+        if (popup.panel) {
+            side.classList.add("open")
+            content.replaceChildren()
+
+            popups.replaceChildren()
+            popup.windows.clear()
+        }
+
+        else side.classList.remove("open")
+    })
+
+    host.getElementById("toggle").onclick = () => panel.classList.toggle("open")
+    side.querySelector("span").onclick = () => side.classList.remove("open")
 }
 
 init()

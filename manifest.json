@@ -1,9 +1,18 @@
 {
     "manifest_version": 3,
     "name": "Mystify",
-    "version": "0.5.5",
+    "version": "0.5.7",
     "permissions": ["scripting", "storage"],
     "description": "Quality of life overlay for Mystera Legacy",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "mystify@greyhope.uk",
+            "data_collection_permissions": {
+                "required": ["none"],
+                "optional": []
+            }
+        }
+    },
     "content_scripts": [
         {
             "matches": ["https://www.mysteralegacy.com/play/full.php", "https://www.mysteralegacy.com/play-ml/"],
@@ -20,12 +29,5 @@
         "16": "icon16.png",
         "32": "icon32.png",
         "48": "icon48.png"
-    },
-    "web_accessible_resources": [{
-        "resources": ["inject.js"],
-        "matches": ["https://www.mysteralegacy.com/*"]
-    }, {
-        "resources": ["assets/mob.png"],
-        "matches": ["https://www.mysteralegacy.com/*"]
-    }]
+    }
 }
